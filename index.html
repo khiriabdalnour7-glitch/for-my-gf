@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hey You! ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ffe5ec, #ffc2d1);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            max-width: 450px;
+            width: 90%;
+            position: relative;
+        }
+
+        .heart {
+            font-size: 50px;
+            color: #ff477e;
+            animation: pulse 1.2s infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        h1 {
+            color: #ff477e;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            height: 60px;
+            position: relative;
+        }
+
+        button {
+            padding: 12px 35px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #yesBtn {
+            background-color: #ff477e;
+            color: white;
+        }
+
+        #yesBtn:hover {
+            background-color: #ff5c8a;
+            transform: scale(1.1);
+        }
+
+        #noBtn {
+            background-color: #a3a3a3;
+            color: white;
+            position: absolute; /* Needed for the movement script */
+        }
+
+        /* Success State */
+        .hidden {
+            display: none !important;
+        }
+
+        .success-message h2 {
+            color: #ff477e;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+
+        .success-message p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Main Question Screen -->
+        <div id="questionArea">
+            <div class="heart">❤️</div>
+            <h1 id="question">Will you go on a date with me? 😊</h1>
+            <div class="buttons">
+                <button id="yesBtn">Yes!</button>
+                <button id="noBtn">No</button>
+            </div>
+        </div>
+
+        <!-- Success Screen -->
+        <div id="successArea" class="hidden success-message">
+            <div style="font-size: 60px; margin-bottom: 10px;">🎉🥳💃</div>
+            <h2>Yay! It's a date!</h2>
+            <p>I can't wait. You just made my day! ❤️</p>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const questionArea = document.getElementById('questionArea');
+        const successArea = document.getElementById('successArea');
+
+        // Function to move the "No" button randomly
+        function moveNoButton() {
+            // Get viewport dimensions to ensure it stays on screen
+            const padding = 20;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+            // Generate random positions
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+
+            // Change position to fixed so it can escape the container bounds entirely
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        // Move button when mouse hovers over it (for desktop)
+        noBtn.addEventListener('mouseenter', moveNoButton);
+
+        // Move button when someone tries to tap it (for mobile/tablets)
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Prevents accidental click triggering on mobile
+            moveNoButton();
+        });
+
+        // What happens when she clicks "Yes"
+        yesBtn.addEventListener('click', () => {
+            questionArea.classList.add('hidden');
+            successArea.classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>
