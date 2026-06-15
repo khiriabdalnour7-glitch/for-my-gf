@@ -1,169 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hey You! ❤️</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A cute Valentine's Day page to ask someone to be your Valentine!">
+  <meta name="theme-color" content="#ffd0e5">
+  <title>Date Invitation for Afnan ❤️</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <style>
+    .gradient-background {
+      background: linear-gradient(180deg, #ffd0e5 0%, #ffe8f2 36%, #ffffff 100%);
+      min-height: 100vh;
+    }
 
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #ffe5ec, #ffc2d1);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
-            overflow: hidden;
-        }
+    .bounce {
+      animation: bounce 2s ease infinite;
+    }
 
-        .container {
-            background: rgba(255, 255, 255, 0.85);
-            padding: 40px 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            max-width: 450px;
-            width: 90%;
-            position: relative;
-        }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-20px);
+      }
+      60% {
+        transform: translateY(-10px);
+      }
+    }
 
-        .heart {
-            font-size: 50px;
-            color: #ff477e;
-            animation: pulse 1.2s infinite;
-            margin-bottom: 20px;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.15); }
-            100% { transform: scale(1); }
-        }
-
-        h1 {
-            color: #ff477e;
-            font-size: 2rem;
-            margin-bottom: 30px;
-            line-height: 1.4;
-        }
-
-        .buttons {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            height: 60px;
-            position: relative;
-        }
-
-        button {
-            padding: 12px 35px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        #yesBtn {
-            background-color: #ff477e;
-            color: white;
-        }
-
-        #yesBtn:hover {
-            background-color: #ff5c8a;
-            transform: scale(1.1);
-        }
-
-        #noBtn {
-            background-color: #a3a3a3;
-            color: white;
-            position: absolute; /* Needed for the movement script */
-        }
-
-        /* Success State */
-        .hidden {
-            display: none !important;
-        }
-
-        .success-message h2 {
-            color: #ff477e;
-            font-size: 2.2rem;
-            margin-bottom: 15px;
-        }
-
-        .success-message p {
-            color: #666;
-            font-size: 1.1rem;
-        }
-    </style>
+    /* كود لجعل حركة زر الـ No تبدو ناعمة وسريعة */
+    #noButton {
+      transition: all 0.1s ease-out;
+    }
+  </style>
+  <link rel="preload" as="image" href="./images/image1.gif">
+  <link rel="preload" as="image" href="./images/image2.gif">
+  <link rel="preload" as="image" href="./images/image3.gif">
+  <link rel="preload" as="image" href="./images/image4.gif">
+  <link rel="preload" as="image" href="./images/image5.gif">
+  <link rel="preload" as="image" href="./images/image6.gif">
+  <link rel="preload" as="image" href="./images/image7.gif">
 </head>
-<body>
+<body class="gradient-background">
+  <main class="flex items-center justify-center h-screen">
+    <section class="flex flex-col items-center p-4">
+      <img
+        id="imageDisplay"
+        src="./images/image1.gif"
+        alt="Cute kitten with flowers"
+        class="rounded-md h-[300px] object-cover"
+      />
+      <!-- التعديل الجديد على السؤال هنا -->
+      <h1 id="valentineQuestion" class="text-3xl md:text-4xl font-bold italic text-[#bd1e59] my-4 text-center">
+        AFNAN CAN U GO ON A DATE WITH DADDY NOUR ? 🥺
+      </h1>
+      <div id="responseButtons" class="flex gap-4 pt-5 items-center justify-center w-full max-w-xs relative h-20">
+        <button
+          id="yesButton"
+          class="bounce inline-flex items-center justify-center whitespace-nowrap rounded-md text-xl font-medium cursor-pointer px-4 py-2 bg-green-500 text-white transition-all duration-300 ease-in-out hover:bg-green-400 min-h-12 min-w-[75px]"
+        >
+          Yes
+        </button>
+        <button
+          id="noButton"
+          class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-xl font-medium cursor-pointer px-4 py-2 bg-red-500 text-white transition-colors hover:bg-red-700 h-12 min-w-[75px]"
+        >
+          No
+        </button>
+      </div>
+    </section>
+  </main>
 
-    <div class="container">
-        <!-- Main Question Screen -->
-        <div id="questionArea">
-            <div class="heart">❤️</div>
-            <h1 id="question">Will you go on a date with me? 😊</h1>
-            <div class="buttons">
-                <button id="yesBtn">Yes!</button>
-                <button id="noBtn">No</button>
-            </div>
-        </div>
+  <script>
+    (() => {
+      const yesButton = document.getElementById('yesButton');
+      const noButton = document.getElementById('noButton');
+      const imageDisplay = document.getElementById('imageDisplay');
+      const valentineQuestion = document.getElementById('valentineQuestion');
+      const responseButtons = document.getElementById('responseButtons');
 
-        <!-- Success Screen -->
-        <div id="successArea" class="hidden success-message">
-            <div style="font-size: 60px; margin-bottom: 10px;">🎉🥳💃</div>
-            <h2>Yay! It's a date!</h2>
-            <p>I can't wait. You just made my day! ❤️</p>
-        </div>
-    </div>
+      const IMAGE_PATHS = [
+        './images/image1.gif',
+        './images/image2.gif',
+        './images/image3.gif',
+        './images/image4.gif',
+        './images/image5.gif',
+        './images/image6.gif',
+        './images/image7.gif',
+      ];
 
-    <script>
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-        const questionArea = document.getElementById('questionArea');
-        const successArea = document.getElementById('successArea');
+      const ALT_TEXTS = [
+        'Cute kitten with flowers',
+        'Sad kitten looking up',
+        'Kitten begging',
+        'Heartbroken kitten',
+        'Crying kitten',
+        'Devastated kitten',
+        'Happy kitten celebrating',
+      ];
 
-        // Function to move the "No" button randomly
-        function moveNoButton() {
-            // Get viewport dimensions to ensure it stays on screen
-            const padding = 20;
-            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+      // دالة هروب زر الـ No بشكل عشوائي في الشاشة بالكامل
+      function moveNoButton() {
+        const padding = 30;
+        // حساب الحدود بناءً على حجم شاشة هاتفها أو كمبيوترها
+        const maxX = window.innerWidth - noButton.offsetWidth - padding;
+        const maxY = window.innerHeight - noButton.offsetHeight - padding;
 
-            // Generate random positions
-            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
-            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+        const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+        const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
 
-            // Change position to fixed so it can escape the container bounds entirely
-            noBtn.style.position = 'fixed';
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
-        }
+        noButton.style.position = 'fixed';
+        noButton.style.left = `${randomX}px`;
+        noButton.style.top = `${randomY}px`;
+        noButton.style.zIndex = '9999';
+      }
 
-        // Move button when mouse hovers over it (for desktop)
-        noBtn.addEventListener('mouseenter', moveNoButton);
+      // تفعيل الهروب عند اقتراب الفأرة (للكمبيوتر) أو عند محاولة اللمس (للهواتف)
+      noButton.addEventListener('mouseenter', moveNoButton);
+      noButton.addEventListener('touchstart', (e) => {
+        e.preventDefault(); // يمنع الضغط العشوائي على الهاتف قبل تحرك الزر
+        moveNoButton();
+      });
 
-        // Move button when someone tries to tap it (for mobile/tablets)
-        noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault(); // Prevents accidental click triggering on mobile
-            moveNoButton();
+      // عند الضغط على Yes بنجاح
+      yesButton.addEventListener('click', () => {
+        imageDisplay.src = IMAGE_PATHS[IMAGE_PATHS.length - 1];
+        imageDisplay.alt = ALT_TEXTS[ALT_TEXTS.length - 1];
+        valentineQuestion.textContent = 'Yayyy!! See you on our date! 🥰❤️';
+        responseButtons.style.display = 'none';
+
+        // تأثير قصاصات الورق الملونة على شكل قلوب
+        const heart = confetti.shapeFromPath({
+          path: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z',
         });
 
-        // What happens when she clicks "Yes"
-        yesBtn.addEventListener('click', () => {
-            questionArea.classList.add('hidden');
-            successArea.classList.remove('hidden');
-        });
-    </script>
+        const defaults = { spread: 360, ticks: 100, gravity: 0, decay: 0.94, startVelocity: 20, shapes: [heart], colors: ['#ff69b4', '#ff1493', '#ff6b81', '#e84393'] };
+
+        confetti({ ...defaults, particleCount: 50, scalar: 2 });
+        confetti({ ...defaults, particleCount: 25, scalar: 3 });
+        confetti({ ...defaults, particleCount: 10, scalar: 4 });
+      });
+    })();
+  </script>
 </body>
 </html>
